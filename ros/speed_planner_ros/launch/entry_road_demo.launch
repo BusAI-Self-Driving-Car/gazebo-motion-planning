@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <include file="$(find speed_planner_ros)/launch/dbw_mkz_gazebo.launch" >
+    <arg name="use_camera_control" value="true" />
+    <arg name="world_name" value="$(find speed_planner_ros)/worlds/entry_road_track.world" />
+    <arg name="sim_param_file" value="$(find speed_planner_ros)/yaml/single_vehicle_test_track.yaml" />
+  </include>
+</launch>

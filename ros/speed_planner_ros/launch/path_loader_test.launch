@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="speed_planner_ros" type="path_loader.py" name="path_loader" output="screen">
+        <param name="fpath" value="$(find speed_planner_ros)/data/scenario4_crosswalk.csv" />
+        <param name="frame_id" value="world" />
+    </node>
+    <node pkg="speed_planner_ros" type="pose_generator.py" name="pose_generator" output="screen"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find speed_planner_ros)/rviz/scenario4.rviz"/>
+</launch>

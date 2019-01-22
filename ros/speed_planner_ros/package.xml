@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>speed_planner_ros</name>
+  <version>1.2.7</version>
+  <description>
+    Given a preset path, assign the speed to each path points.
+  </description>
+
+  <license>Proprietary</license>
+  <author email="xx@xx.com">Peng Xu</author>
+  <maintainer email="xx@xx.com">Peng Xu</maintainer>
+  <url type="xx">http://xx.com</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+  <build_depend>geometry_msgs/Pose</build_depend>
+  <build_depend>gazebo_msgs/ModelStates</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>styx_msgs</build_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>styx_msgs</exec_depend>
+  <exec_depend>geometry_msgs/Pose</exec_depend>
+  <exec_depend>gazebo_msgs/ModelStates</exec_depend>
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/models/"/>
+  </export>
+
+</package>

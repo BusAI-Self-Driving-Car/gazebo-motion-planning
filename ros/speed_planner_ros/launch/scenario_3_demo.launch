@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <include file="$(find dbw_mkz_gazebo)/launch/dbw_mkz_gazebo.launch" >
+    <arg name="use_camera_control" value="true" />
+    <arg name="world_name" value="$(find speed_planner_ros)/worlds/crossroad_track.world" />
+    <arg name="sim_param_file" value="$(find speed_planner_ros)/yaml/scenario_3_test.yaml" />
+  </include>
+
+  <include file="$(find dbw_mkz_vision_sim)/launch/lane_detection.launch" />
+
+  <node ns="vehicle" pkg="dbw_mkz_vision_sim" type="path_following_node" name="path_following" />
+
+  <include file="$(find dbw_mkz_can)/launch/dbw.launch" >
+    <arg name="live" value="false" />
+    <arg name="load_urdf" value="false" />
+    <arg name="can_ns" value="can_bus_dbw" />
+    <arg name="ulc" value="false" />
+  </include>
+
+  <node ns="vehicle" pkg="dbw_mkz_twist_controller" type="twist_controller" name="twist_control" />
+
+  <node name="traj_recorder" pkg="gazebo_state_pub" type="traj_recorder.py" output="screen" >
+		<param name="filepath" value="$(find speed_planner_ros)/data/path_points.csv"/>
+		<remap from="current_pose" to="/vehicle/current_pose" />
+	</node>
+
+</launch>
