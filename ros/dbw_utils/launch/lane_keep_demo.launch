@@ -16,5 +16,8 @@
     <arg name="live" value="false" />
     <arg name="load_urdf" value="false" />
     <arg name="can_ns" value="can_bus_dbw" />
+    <arg name="ulc" value="false" />
   </include>
+
+  <node ns="vehicle" pkg="dbw_mkz_twist_controller" type="twist_controller" name="twist_control" />
 </launch>
