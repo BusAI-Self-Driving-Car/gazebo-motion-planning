@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="path_loader" type="scenario_loader.py" name="scenario_loader" output="screen">
+        <param name="fpath1" value="$(find path_loader)../../data/scenario2_yellow.csv" />
+        <param name="fpath2" value="$(find path_loader)../../data/scenario2_white.csv" />
+        <param name="frame_id" value="world" />
+    </node>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find path_loader)../../config/scenario_loader.rviz"/>
+</launch>
