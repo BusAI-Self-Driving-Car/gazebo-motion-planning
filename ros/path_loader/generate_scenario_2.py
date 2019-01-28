@@ -9,7 +9,7 @@ from nav_msgs.msg import Path
 
 ORIGIN = [0, 0]
 ROAD_WIDTH = 5.0
-ROAD_LENGTH = 115.0
+ROAD_LENGTH = 120.0
 CORNER_GAP = 2.5
 
 # utility fnc to compute min delta angle, accounting for periodicity
@@ -532,6 +532,98 @@ def generate_target_path(id):
 
         pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH * 1.5 - CORNER_GAP - i * 0.5
         pose.position.y = ORIGIN[1] - ROAD_WIDTH * 5.0 / 2.0
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # on turning 2
+    phi0 = pi / 2
+    radius = CORNER_GAP + ROAD_WIDTH / 2.0
+    n_points = int(pi / 2 * radius / 0.5)
+    for i in range(1, n_points+1):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 3.0 - CORNER_GAP + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # before turning 3
+    for i in range(50):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] - CORNER_GAP - ROAD_WIDTH / 2.0
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 3.0 - CORNER_GAP - i * 0.5
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # on turning 3
+    phi0 = pi
+    radius = CORNER_GAP + ROAD_WIDTH / 2.0
+    n_points = int(pi / 2 * radius / 0.5)
+    for i in range(1, n_points+1):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 3.0 - CORNER_GAP - 25.0 + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # after turning 3
+    for i in range(100):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + i * 0.5
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 3.0 - CORNER_GAP - 25.0 - CORNER_GAP - ROAD_WIDTH / 2.0
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
