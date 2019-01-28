@@ -9,8 +9,8 @@ from nav_msgs.msg import Path
 
 
 ORIGIN = [0, 0]
-ROAD_WIDTH = 5
-ROAD_LENGTH = 115
+ROAD_WIDTH = 5.0
+ROAD_LENGTH = 115.0
 CORNER_GAP = 2.5
 
 # utility fnc to compute min delta angle, accounting for periodicity
@@ -53,8 +53,8 @@ def generate_yellow_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 - ROAD_WIDTH - CORNER_GAP - i * 0.5
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH - CORNER_GAP - i * 0.5
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
@@ -74,8 +74,8 @@ def generate_yellow_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 + ROAD_WIDTH + CORNER_GAP + i * 0.5
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP + i * 0.5
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
@@ -91,7 +91,7 @@ def generate_yellow_lines(id):
     # round corner 1
     phi0 = 0.0
     radius = CORNER_GAP
-    n_points = int(pi / 2 * radius / 0.5) 
+    n_points = int(pi / 2 * radius / 0.5)
     for i in range(1, n_points+1):
         id += 1
 
@@ -99,8 +99,8 @@ def generate_yellow_lines(id):
         pose = Pose()
 
         phi = min_dang(phi0 + 0.5 / radius * i)
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 - ROAD_WIDTH - CORNER_GAP + radius * cos(phi)
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP + radius * sin(phi)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH - CORNER_GAP + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP + radius * sin(phi)
         pose.position.z = 0.0  # let's hope so!
 
         yaw = min_dang(phi)
@@ -124,8 +124,8 @@ def generate_yellow_lines(id):
         pose = Pose()
 
         phi = min_dang(phi0 + 0.5 / radius * i)
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 + ROAD_WIDTH + CORNER_GAP + radius * cos(phi)
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP + radius * sin(phi)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP + radius * sin(phi)
         pose.position.z = 0.0  # let's hope so!
 
         yaw = min_dang(phi)
@@ -145,8 +145,8 @@ def generate_yellow_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0]  + ROAD_LENGTH / 2 - ROAD_WIDTH
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP - i * 0.5
+        pose.position.x = ORIGIN[0]  + ROAD_LENGTH / 2.0 - ROAD_WIDTH
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP - i * 0.5
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
@@ -166,8 +166,8 @@ def generate_yellow_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 + ROAD_WIDTH
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP- i * 0.5
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP- i * 0.5
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
@@ -192,7 +192,7 @@ def generate_white_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 - ROAD_WIDTH - CORNER_GAP - i * 0.5
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH - CORNER_GAP - i * 0.5
         pose.position.y = ORIGIN[1] - ROAD_WIDTH
         pose.position.z = 0.0  # let's hope so!
 
@@ -213,7 +213,7 @@ def generate_white_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2 + ROAD_WIDTH + CORNER_GAP + i * 0.5
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP + i * 0.5
         pose.position.y = ORIGIN[1] - ROAD_WIDTH
         pose.position.z = 0.0  # let's hope so!
 
@@ -234,8 +234,8 @@ def generate_white_lines(id):
         pose_stamped = PoseStamped()
         pose = Pose()
 
-        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2
-        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP - i * 0.5
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP - i * 0.5
         pose.position.z = 0.0  # let's hope so!
 
         yaw = 0.0
@@ -248,9 +248,9 @@ def generate_white_lines(id):
 
         poses.append(pose_stamped)
 
-    poses += generate_crosswalk([ORIGIN[0] + ROAD_LENGTH / 2 - ROAD_WIDTH - CORNER_GAP - 5, ORIGIN[1]], id)
-    poses += generate_crosswalk([ORIGIN[0] + ROAD_LENGTH / 2 + ROAD_WIDTH + CORNER_GAP, ORIGIN[1]], id)
-    poses += generate_crosswalk_hori([ORIGIN[0] + ROAD_LENGTH / 2 - ROAD_WIDTH, ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP], id)
+    poses += generate_crosswalk([ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH - CORNER_GAP - 5, ORIGIN[1]], id)
+    poses += generate_crosswalk([ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP, ORIGIN[1]], id)
+    poses += generate_crosswalk_hori([ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH, ORIGIN[1] - ROAD_WIDTH * 2 - CORNER_GAP], id)
 
     return poses
 
@@ -392,6 +392,78 @@ def generate_crosswalk_hori(topleft, id):
 
     return poses
 
+def generate_target_path(id):
+    poses = []
+
+    # before turning
+    for i in range(50):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 - ROAD_WIDTH / 2.0
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP - 25 + i * 0.5
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # on turning
+    phi0 = pi / 2
+    radius = CORNER_GAP + ROAD_WIDTH * 1.5
+    n_points = int(pi / 2 * radius / 0.5)
+    for i in reversed(range(1, n_points+1)):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # after turning
+    for i in range(100):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH / 2.0 + ROAD_WIDTH + CORNER_GAP + i * 0.5
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH / 2.0
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    return poses
+
 def write_to_csv(poses, fname):
     with open(fname, 'w') as wfile:
         writer = csv.writer(wfile, delimiter=' ')
@@ -410,6 +482,9 @@ def main():
     fname = 'scenario3_white.csv'
     write_to_csv(poses, fname)
 
+    poses = generate_target_path(0)
+    fname = 'scenario3_target_path.csv'
+    write_to_csv(poses, fname)
 
 if __name__ == '__main__':
     try:
