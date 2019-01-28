@@ -236,7 +236,7 @@ def get_next_waypoints(waypoints, current_pose, base, n, ilane):
     # rospy.loginfo('******** s = %f, d = %f *********' % (current_s, current_d))
     current_d = distance(current_x, current_y, next_waypoints[0].pose.position.x, next_waypoints[0].pose.position.y)
 
-    d = 2 + ilane * 4
+    d = 0 + ilane * 4
 
     # fits a polynomial for given paths
     s_coords = [maps_s[0], maps_s[1], maps_s[n/2], maps_s[-3], maps_s[-2], maps_s[-1]]
@@ -252,7 +252,7 @@ def get_next_waypoints(waypoints, current_pose, base, n, ilane):
     target_d = d
 
     s_add_on = 0
-    
+
     for i in range(n):
         s_point = s_add_on + target_s / n
         d_point = f(s_point)
@@ -277,7 +277,7 @@ def get_next_waypoints(waypoints, current_pose, base, n, ilane):
         pose.position.x = x_points[i]
         pose.position.y = y_points[i]
         pose.position.z = 0.5
-        
+
         pose_stamped.header.frame_id = frame_id
         pose_stamped.header.seq = i
         pose_stamped.pose = pose
@@ -293,4 +293,3 @@ def get_next_waypoints(waypoints, current_pose, base, n, ilane):
         # rospy.loginfo('x = %f, y = %f' % (x_points[i], y_points[i]))
 
     return next_waypoints, next_waypoints_cloud
-

@@ -126,7 +126,7 @@ class pathUpdater(object):
         rate = rospy.Rate(50)
 
         self.ilane = int(rospy.get_param("~lane_index", '0'))
-        self.cruise_speed = int(rospy.get_param("~cruise_speed", '10'))
+        self.cruise_speed = int(rospy.get_param("~cruise_speed", '2'))
 
         while not rospy.is_shutdown():
 
@@ -142,7 +142,7 @@ class pathUpdater(object):
 
             # Publish
             path = utils.construct_path_object(self.frame_id, lookahead_waypoints)
-            
+
             lane = Lane()
             lane.header.frame_id = self.frame_id
             for i in range(len(lookahead_waypoints)):
