@@ -7,7 +7,6 @@ from geometry_msgs.msg import Quaternion, Point32, PoseStamped, Pose
 from sensor_msgs.msg import PointCloud
 from nav_msgs.msg import Path
 
-
 ORIGIN = [0, 0]
 ROAD_WIDTH = 5
 ROAD_LENGTH = 115
@@ -112,7 +111,7 @@ def generate_yellow_lines(id):
     # round corner 1
     phi0 = 0.0
     radius = CORNER_GAP
-    n_points = int(pi / 2 * radius / 0.5) 
+    n_points = int(pi / 2 * radius / 0.5)
     for i in range(1, n_points+1):
         id += 1
 
