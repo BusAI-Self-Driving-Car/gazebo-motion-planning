@@ -186,6 +186,74 @@ def generate_target_path(id):
 
         poses.append(pose_stamped)
 
+    # on U turn
+    phi0 = -pi/2
+    radius = ROAD_WIDTH * 2.0
+    n_points = int(pi * radius / 0.5)
+    for i in range(1, n_points+1):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH + radius * cos(phi)
+        pose.position.y = ORIGIN[1] + ROAD_WIDTH * 1.5 + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    for i in range(230):
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH - i * 0.5
+        pose.position.y = ORIGIN[0] + ROAD_WIDTH * 3.5
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = i
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # on U turn
+    phi0 = pi/2
+    radius = ROAD_WIDTH * 2.0
+    n_points = int(pi * radius / 0.5)
+    for i in range(1, n_points+1):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + radius * cos(phi)
+        pose.position.y = ORIGIN[1] + ROAD_WIDTH * 1.5 + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
     return poses
 
 def write_to_csv(poses, fname):
