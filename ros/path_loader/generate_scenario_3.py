@@ -461,6 +461,98 @@ def generate_target_path(id):
 
         poses.append(pose_stamped)
 
+    # on turning 2
+    phi0 = 0.0
+    radius = CORNER_GAP + ROAD_WIDTH * 1.5
+    n_points = int(pi / 2 * radius / 0.5)
+    for i in reversed(range(1, n_points+1)):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # after turning 2
+    for i in range(50):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH + radius
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP - 0.5 * i
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # on turning 3
+    phi0 = -pi/2
+    radius = CORNER_GAP + ROAD_WIDTH * 1.5
+    n_points = int(pi / 2 * radius / 0.5)
+    for i in reversed(range(1, n_points+1)):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        phi = min_dang(phi0 + 0.5 / radius * i)
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH + radius * cos(phi)
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP - 25.0 + radius * sin(phi)
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = min_dang(phi)
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    # after turning 3
+    for i in range(100):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH - 0.5 * i
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 2.0 - CORNER_GAP -25.0 -radius
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = id
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
     return poses
 
 def write_to_csv(poses, fname):
