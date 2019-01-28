@@ -7,7 +7,6 @@ from geometry_msgs.msg import Quaternion, Point32, PoseStamped, Pose
 from sensor_msgs.msg import PointCloud
 from nav_msgs.msg import Path
 
-
 ORIGIN = [0, 0]
 ROAD_WIDTH = 5.0
 ROAD_LENGTH = 115.0

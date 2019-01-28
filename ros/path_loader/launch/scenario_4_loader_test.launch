@@ -3,6 +3,7 @@
     <node pkg="path_loader" type="scenario_loader.py" name="scenario_loader" output="screen">
         <param name="fpath1" value="$(find path_loader)../../data/scenario4_yellow.csv" />
         <param name="fpath2" value="$(find path_loader)../../data/scenario4_white.csv" />
+        <param name="fpath3" value="$(find path_loader)../../data/scenario4_target_path.csv" />
         <param name="frame_id" value="world" />
     </node>
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find path_loader)../../config/scenario_loader.rviz"/>
