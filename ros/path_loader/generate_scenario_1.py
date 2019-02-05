@@ -392,6 +392,31 @@ def generate_target_path(id):
 
     return poses
 
+def generate_obstacle_path(id):
+    poses = []
+
+    for i in range(230):
+        id += 1
+
+        pose_stamped = PoseStamped()
+        pose = Pose()
+
+        pose.position.x = ORIGIN[0] + ROAD_LENGTH - i * 0.5
+        pose.position.y = ORIGIN[1] - ROAD_WIDTH * 1.5
+        pose.position.z = 0.0  # let's hope so!
+
+        yaw = 0.0
+        quat = quaternion_from_yaw(yaw)
+        pose.orientation = quat
+
+        pose_stamped.header.frame_id = '/world'
+        pose_stamped.header.seq = i
+        pose_stamped.pose = pose
+
+        poses.append(pose_stamped)
+
+    return poses
+
 def write_to_csv(poses, fname):
     with open(fname, 'w') as wfile:
         writer = csv.writer(wfile, delimiter=' ')
@@ -412,6 +437,10 @@ def main():
 
     poses = generate_target_path(0)
     fname = 'scenario1_target_path.csv'
+    write_to_csv(poses, fname)
+
+    poses = generate_obstacle_path(0)
+    fname = 'scenario1_obstacle_path.csv'
     write_to_csv(poses, fname)
 
 

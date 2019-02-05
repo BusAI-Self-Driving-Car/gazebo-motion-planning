@@ -42,11 +42,15 @@
       <param name="fpath1" value="$(find path_loader)../../data/scenario1_yellow.csv" />
       <param name="fpath2" value="$(find path_loader)../../data/scenario1_white.csv" />
       <param name="fpath3" value="$(find path_loader)../../data/scenario1_target_path.csv" />
+      <param name="fpath4" value="$(find path_loader)../../data/scenario1_obstacle_path.csv" />
       <param name="frame_id" value="world" />
   </node>
 
   <node pkg="path_updater" type="path_updater.py" name="path_updater" output="screen">
       <remap from="current_pose" to="/vehicle/current_pose" />
+  </node>
+
+  <node pkg="path_updater" type="obstacle_generator.py" name="obstacle_generator" output="screen">
   </node>
 
   <!-- Display -->

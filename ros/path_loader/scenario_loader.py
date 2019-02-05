@@ -26,23 +26,26 @@ class ScenarioLoader(object):
         self.lane_line_white_points_pub = rospy.Publisher('/lane_line_white_points', PointCloud, queue_size=1, latch=True)
 
         self.path_pub = rospy.Publisher('/base_path', Path, queue_size=1, latch=True)
+        self.obstacle_path_pub = rospy.Publisher('/obstacle_path', Path, queue_size=1, latch=True)
 
         file1_name = rospy.get_param('~fpath1')
         file2_name = rospy.get_param('~fpath2')
         file3_name = rospy.get_param('~fpath3')
-        self.new_lane_lines_loader(file1_name, file2_name, file3_name)
+        file4_name = rospy.get_param('~fpath4')
+        self.new_lane_lines_loader(file1_name, file2_name, file3_name, file4_name)
 
         rospy.spin()
 
-    def new_lane_lines_loader(self, fpath1, fpath2, fpath3):
+    def new_lane_lines_loader(self, fpath1, fpath2, fpath3, fpath4):
         if os.path.isfile(fpath1) and os.path.isfile(fpath2):
             yellow_points = self.load_path(fpath1)
             white_points = self.load_path(fpath2)
             target_path = self.target_path(fpath3)
-            self.publish(yellow_points, white_points, target_path)
-            rospy.loginfo('Lane Lines and Target Path loaded')
+            obstacle_path = self.obstacle_path(fpath4)
+            self.publish(yellow_points, white_points, target_path, obstacle_path)
+            rospy.loginfo('Lane Lines and Target & Obstacle Path loaded')
         else:
-            rospy.logerr('%s, %s or %s is not a file', fpath1, fpath2, fpath3)
+            rospy.logerr('%s, %s, %s or %s is not a file', fpath1, fpath2, fpath3, fpath4)
 
     def load_path(self, fname):
         points = []
@@ -82,8 +85,32 @@ class ScenarioLoader(object):
 
         return path
 
+    def obstacle_path(self, fname):
+        poses = []
+        points = []
+        with open(fname) as wfile:
+            reader = csv.DictReader(wfile, delimiter=' ', fieldnames=CSV_HEADER)
+            for index, wp in enumerate(reader):
+                pose_stamped = PoseStamped()
+                pose = Pose()
 
-    def publish(self, yellow_points, white_points, target_path):
+                pose.position.x = float(wp['x'])
+                pose.position.y = float(wp['y'])
+                pose.position.z = 0.0
+
+                pose_stamped.header.frame_id = self.frame_id
+                pose_stamped.header.seq = index
+                pose_stamped.pose = pose
+                poses.append(pose_stamped)
+
+        path = Path()
+        path.header.frame_id = self.frame_id
+        path.header.stamp = rospy.Time(0)
+        path.poses = poses
+
+        return path
+
+    def publish(self, yellow_points, white_points, target_path, obstacle_path):
         lane_line_yellow_points = PointCloud()
         lane_line_yellow_points.header.frame_id = self.frame_id
         lane_line_yellow_points.header.stamp = rospy.Time(0)
@@ -97,6 +124,9 @@ class ScenarioLoader(object):
         self.lane_line_white_points_pub.publish(lane_line_white_points)
 
         self.path_pub.publish(target_path)
+
+        self.obstacle_path_pub.publish(obstacle_path)
+
 
 if __name__ == '__main__':
     try:
